@@ -157,5 +157,3 @@ const animateBinarySearch = (container, step) => {
 };
 
 export default animateBinarySearch;
-
-// Made with Bob

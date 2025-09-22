@@ -305,4 +305,3 @@ export const highlightTreeNodes = (context, node, visited, queue, x, y, horizont
   }
 };
 
-// Made with Bob

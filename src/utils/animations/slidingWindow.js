@@ -89,4 +89,4 @@ const animateSlidingWindowFixed = (container, step) => {
 
 export default animateSlidingWindowFixed;
 
-// Made with Bob
+

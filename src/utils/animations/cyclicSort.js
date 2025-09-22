@@ -91,4 +91,3 @@ const animateCyclicSort = (container, step) => {
 
 export default animateCyclicSort;
 
-// Made with Bob

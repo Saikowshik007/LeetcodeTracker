@@ -126,4 +126,3 @@ const animateFastSlowPointers = (container, step) => {
 
 export default animateFastSlowPointers;
 
-// Made with Bob

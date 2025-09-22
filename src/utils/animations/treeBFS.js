@@ -126,4 +126,3 @@ const highlightTreeNodes = (context, node, visited, queue, x, y, horizontalSpaci
 
 export default animateTreeBFS;
 
-// Made with Bob

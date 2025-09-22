@@ -129,4 +129,3 @@ const animateMergeIntervals = (container, step) => {
 
 export default animateMergeIntervals;
 
-// Made with Bob

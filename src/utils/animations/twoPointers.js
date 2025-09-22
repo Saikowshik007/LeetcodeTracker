@@ -112,4 +112,3 @@ const animateTwoPointersConverging = (container, step) => {
 
 export default animateTwoPointersConverging;
 
-// Made with Bob
