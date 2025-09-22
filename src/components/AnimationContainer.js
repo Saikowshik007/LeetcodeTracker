@@ -30,14 +30,7 @@ const AnimationContainer = ({ patternId }) => {
     }
   }, [animationFunc]);
 
-  useEffect(() => {
-    if (animationFunc && canvasRef.current) {
-      // Initialize animation
-      resetAnimation();
-    }
-  }, [animationFunc, resetAnimation]);
-
-  const startAnimation = () => {
+  const startAnimation = useCallback(() => {
     if (!animationFunc || !canvasRef.current) return;
 
     setIsPlaying(true);
@@ -50,7 +43,6 @@ const AnimationContainer = ({ patternId }) => {
       const result = animationFunc({ canvas, context }, currentStepRef.current);
 
       if (!result) {
-        // Animation complete
         setIsPlaying(false);
         if (intervalRef.current) {
           clearInterval(intervalRef.current);
@@ -63,30 +55,15 @@ const AnimationContainer = ({ patternId }) => {
         setDescription(result.description);
       }
     }, 1000 / speed);
-  };
+  }, [animationFunc, speed]);
 
-  const stopAnimation = () => {
+  const stopAnimation = useCallback(() => {
     if (intervalRef.current) {
       clearInterval(intervalRef.current);
       intervalRef.current = null;
     }
     setIsPlaying(false);
-  };
-
-  const resetAnimation = () => {
-    stopAnimation();
-    setCurrentStep(0);
-    setDescription('');
-
-    if (animationFunc && canvasRef.current) {
-      const canvas = canvasRef.current;
-      const context = canvas.getContext('2d');
-      const result = animationFunc({ canvas, context }, 0);
-      if (result && result.description) {
-        setDescription(result.description);
-      }
-    }
-  };
+  }, []);
 
   const toggleAnimation = () => {
     if (isPlaying) {
@@ -102,11 +79,16 @@ const AnimationContainer = ({ patternId }) => {
 
     if (isPlaying) {
       stopAnimation();
-      setTimeout(startAnimation, 50); // Small delay to restart with new speed
+      setTimeout(() => startAnimation(), 50);
     }
   };
 
-  // Cleanup on unmount
+  useEffect(() => {
+    if (animationFunc && canvasRef.current) {
+      resetAnimation();
+    }
+  }, [animationFunc, resetAnimation]);
+
   useEffect(() => {
     return () => {
       if (intervalRef.current) {
@@ -116,7 +98,7 @@ const AnimationContainer = ({ patternId }) => {
   }, []);
 
   if (!animationFunc) {
-    return null; // Don't render if no animation available
+    return null;
   }
 
   return (
