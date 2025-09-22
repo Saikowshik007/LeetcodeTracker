@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { signOut } from 'firebase/auth';
 import { auth } from '../firebase/config';
 import { fetchPatternData, countTotalProblems, countSolvedProblems, loadUserData } from '../services/dataService';
@@ -18,11 +18,19 @@ const MainApp = ({ user }) => {
   const [loading, setLoading] = useState(true);
   const [showPopulate, setShowPopulate] = useState(false);
 
-  useEffect(() => {
-    initializeApp();
-  }, [user]);
+  const updateStatistics = useCallback(async () => {
+    try {
+      const total = await countTotalProblems();
+      const solved = await countSolvedProblems(user.uid);
 
-  const initializeApp = async () => {
+      setTotalProblems(total);
+      setSolvedCount(solved);
+    } catch (error) {
+      console.error('Error updating statistics:', error);
+    }
+  }, [user.uid]);
+
+  const initializeApp = useCallback(async () => {
     try {
       setLoading(true);
 
@@ -41,19 +49,11 @@ const MainApp = ({ user }) => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [user.uid, updateStatistics]);
 
-  const updateStatistics = async () => {
-    try {
-      const total = await countTotalProblems();
-      const solved = await countSolvedProblems(user.uid);
-
-      setTotalProblems(total);
-      setSolvedCount(solved);
-    } catch (error) {
-      console.error('Error updating statistics:', error);
-    }
-  };
+  useEffect(() => {
+    initializeApp();
+  }, [initializeApp]);
 
   const handleLogout = async () => {
     try {

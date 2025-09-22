@@ -1,6 +1,6 @@
 import { initializeApp } from 'firebase/app';
 import { getAuth, GoogleAuthProvider, GithubAuthProvider } from 'firebase/auth';
-import { getFirestore, enableNetwork, disableNetwork } from 'firebase/firestore';
+import { getFirestore } from 'firebase/firestore';
 
 // Firebase configuration
 const firebaseConfig = {
@@ -23,16 +23,5 @@ export const db = getFirestore(app);
 // Initialize auth providers
 export const googleProvider = new GoogleAuthProvider();
 export const githubProvider = new GithubAuthProvider();
-
-// Enable offline persistence for Firestore
-try {
-  enableNetwork(db);
-} catch (err) {
-  if (err.code === 'failed-precondition') {
-    console.log('Persistence failed: Multiple tabs open');
-  } else if (err.code === 'unimplemented') {
-    console.log('Persistence not supported by this browser');
-  }
-}
 
 export default app;

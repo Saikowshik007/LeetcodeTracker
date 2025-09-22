@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { animationRegistry } from '../utils/animations';
 
 const AnimationContainer = ({ patternId }) => {
@@ -11,12 +11,31 @@ const AnimationContainer = ({ patternId }) => {
 
   const animationFunc = animationRegistry[patternId];
 
+  const resetAnimation = useCallback(() => {
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current);
+      intervalRef.current = null;
+    }
+    setIsPlaying(false);
+    setCurrentStep(0);
+    setDescription('');
+
+    if (animationFunc && canvasRef.current) {
+      const canvas = canvasRef.current;
+      const context = canvas.getContext('2d');
+      const result = animationFunc({ canvas, context }, 0);
+      if (result && result.description) {
+        setDescription(result.description);
+      }
+    }
+  }, [animationFunc]);
+
   useEffect(() => {
     if (animationFunc && canvasRef.current) {
       // Initialize animation
       resetAnimation();
     }
-  }, [animationFunc]);
+  }, [animationFunc, resetAnimation]);
 
   const startAnimation = () => {
     if (!animationFunc || !canvasRef.current) return;
