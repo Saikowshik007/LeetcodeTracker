@@ -335,6 +335,60 @@ header .container {
     color: var(--secondary-color);
 }
 
+/* Animation Styles */
+.animation-container {
+    margin: 20px 0;
+    padding: 20px;
+    background-color: var(--white);
+    border-radius: 8px;
+    box-shadow: var(--shadow);
+}
+
+.animation-controls {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin: 15px 0;
+}
+
+.animation-controls button {
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.animation-controls input[type="range"] {
+    flex: 1;
+    height: 6px;
+    -webkit-appearance: none;
+    appearance: none;
+    background: var(--medium-gray);
+    border-radius: 3px;
+    outline: none;
+}
+
+.animation-controls input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--primary-color);
+    cursor: pointer;
+}
+
+.animation-description {
+    margin-top: 15px;
+    padding: 10px;
+    background-color: var(--light-gray);
+    border-radius: 4px;
+    font-size: 0.9rem;
+    color: var(--text-color);
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
     .stats-container {

@@ -122,3 +122,31 @@ async function countSolvedProblems(userId) {
         return 0;
     }
 }
+
+// Function to get animation data for a pattern
+async function getPatternAnimationData(patternId) {
+    try {
+        const animationDoc = await db.collection('animations').doc(patternId).get();
+        
+        if (animationDoc.exists) {
+            return animationDoc.data();
+        }
+        
+        return null;
+    } catch (error) {
+        console.error('Error getting animation data:', error);
+        return null;
+    }
+}
+
+// Function to store animation data for a pattern
+async function storePatternAnimationData(patternId, animationData) {
+    try {
+        await db.collection('animations').doc(patternId).set(animationData);
+        console.log(`Animation data stored for pattern ${patternId}`);
+        return true;
+    } catch (error) {
+        console.error('Error storing animation data:', error);
+        return false;
+    }
+}

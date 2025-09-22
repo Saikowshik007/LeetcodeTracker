@@ -4,9 +4,10 @@ A web application to track your progress through LeetCode problems organized by 
 
 ## Features
 
-- **Firebase Authentication**: Secure user login and registration
+- **Firebase Authentication**: Secure user login and registration with Email/Password, Google, and GitHub
 - **Pattern Organization**: Problems organized by algorithmic patterns
 - **Progress Tracking**: Mark problems as solved and track your progress
+- **Interactive Animations**: Visualize how each algorithm pattern works with interactive animations
 - **Responsive Design**: Works on desktop and mobile devices
 
 ## Setup Instructions
@@ -115,6 +116,32 @@ The application uses Firebase Firestore with the following structure:
     - `createdAt`: Account creation timestamp
     - `solvedProblems`: Object mapping problem IDs to boolean values
 
+## Algorithm Animations
+
+The application includes interactive animations to help users understand how different algorithm patterns work. Each pattern has its own animation that demonstrates the core concept visually.
+
+### Available Animations
+
+- **Two Pointers - Converging**: Visualizes how two pointers move toward each other from opposite ends of an array
+- **Two Pointers - Fast & Slow**: Demonstrates cycle detection using fast and slow pointers
+- **Sliding Window - Fixed Size**: Shows how a fixed-size window slides through an array
+- **Sliding Window - Variable Size**: Illustrates how a window can grow and shrink based on conditions
+
+### Animation Controls
+
+Each animation includes:
+- Play/Pause button: Start or pause the animation
+- Reset button: Return to the initial state
+- Speed control: Adjust the animation speed
+
+### Adding New Animations
+
+To add a new animation:
+
+1. Create a new animation function in `js/animations.js`
+2. Register the animation in the `animationRegistry` object
+3. Store any necessary animation data in Firebase using the `storePatternAnimationData` function
+
 ## Future Enhancements
 
 - Add more LeetCode patterns and problems
@@ -122,3 +149,4 @@ The application uses Firebase Firestore with the following structure:
 - Add difficulty indicators for problems
 - Implement notes feature for each problem
 - Add dark mode
+- Add more algorithm animations

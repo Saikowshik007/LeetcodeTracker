@@ -84,6 +84,22 @@ function renderPatterns(patterns) {
         // Add click event to toggle pattern content
         patternHeader.addEventListener('click', () => {
             patternContent.classList.toggle('expanded');
+            
+            // Initialize animation if pattern has one
+            if (patternContent.classList.contains('expanded') &&
+                animationRegistry &&
+                animationRegistry[pattern.id]) {
+                // Create animation container if it doesn't exist
+                if (!document.getElementById(`animation-${pattern.id}`)) {
+                    const animationContainer = document.createElement('div');
+                    animationContainer.id = `animation-${pattern.id}`;
+                    animationContainer.className = 'animation-container';
+                    patternContent.insertBefore(animationContainer, patternContent.firstChild);
+                }
+                
+                // Reset animation
+                resetAnimation(pattern.id);
+            }
         });
         
         // Render subpatterns
