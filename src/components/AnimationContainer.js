@@ -73,20 +73,20 @@ const AnimationContainer = ({ patternId }) => {
     setIsPlaying(false);
   };
 
-  const resetAnimation = () => {
-    stopAnimation();
-    setCurrentStep(0);
-    setDescription('');
-
-    if (animationFunc && canvasRef.current) {
-      const canvas = canvasRef.current;
-      const context = canvas.getContext('2d');
-      const result = animationFunc({ canvas, context }, 0);
-      if (result && result.description) {
-        setDescription(result.description);
-      }
-    }
-  };
+//  const resetAnimation = () => {
+//    stopAnimation();
+//    setCurrentStep(0);
+//    setDescription('');
+//
+//    if (animationFunc && canvasRef.current) {
+//      const canvas = canvasRef.current;
+//      const context = canvas.getContext('2d');
+//      const result = animationFunc({ canvas, context }, 0);
+//      if (result && result.description) {
+//        setDescription(result.description);
+//      }
+//    }
+//  };
 
   const toggleAnimation = () => {
     if (isPlaying) {
