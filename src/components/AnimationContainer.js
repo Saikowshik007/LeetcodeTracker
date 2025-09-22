@@ -4,10 +4,10 @@ import { animationRegistry } from '../utils/animations';
 const AnimationContainer = ({ patternId }) => {
   const canvasRef = useRef(null);
   const [isPlaying, setIsPlaying] = useState(false);
-  const [currentStep, setCurrentStep] = useState(0);
   const [speed, setSpeed] = useState(1);
   const [description, setDescription] = useState('');
   const intervalRef = useRef(null);
+  const currentStepRef = useRef(0);
 
   const animationFunc = animationRegistry[patternId];
 
@@ -17,7 +17,7 @@ const AnimationContainer = ({ patternId }) => {
       intervalRef.current = null;
     }
     setIsPlaying(false);
-    setCurrentStep(0);
+    currentStepRef.current = 0;
     setDescription('');
 
     if (animationFunc && canvasRef.current) {
@@ -43,25 +43,25 @@ const AnimationContainer = ({ patternId }) => {
     setIsPlaying(true);
 
     intervalRef.current = setInterval(() => {
-      setCurrentStep(prevStep => {
-        const nextStep = prevStep + 1;
-        const canvas = canvasRef.current;
-        const context = canvas.getContext('2d');
+      currentStepRef.current += 1;
+      const canvas = canvasRef.current;
+      const context = canvas.getContext('2d');
 
-        const result = animationFunc({ canvas, context }, nextStep);
+      const result = animationFunc({ canvas, context }, currentStepRef.current);
 
-        if (!result) {
-          // Animation complete
-          setIsPlaying(false);
-          return prevStep;
+      if (!result) {
+        // Animation complete
+        setIsPlaying(false);
+        if (intervalRef.current) {
+          clearInterval(intervalRef.current);
+          intervalRef.current = null;
         }
+        return;
+      }
 
-        if (result.description) {
-          setDescription(result.description);
-        }
-
-        return nextStep;
-      });
+      if (result.description) {
+        setDescription(result.description);
+      }
     }, 1000 / speed);
   };
 
@@ -73,20 +73,20 @@ const AnimationContainer = ({ patternId }) => {
     setIsPlaying(false);
   };
 
-//  const resetAnimation = () => {
-//    stopAnimation();
-//    setCurrentStep(0);
-//    setDescription('');
-//
-//    if (animationFunc && canvasRef.current) {
-//      const canvas = canvasRef.current;
-//      const context = canvas.getContext('2d');
-//      const result = animationFunc({ canvas, context }, 0);
-//      if (result && result.description) {
-//        setDescription(result.description);
-//      }
-//    }
-//  };
+  const resetAnimation = () => {
+    stopAnimation();
+    setCurrentStep(0);
+    setDescription('');
+
+    if (animationFunc && canvasRef.current) {
+      const canvas = canvasRef.current;
+      const context = canvas.getContext('2d');
+      const result = animationFunc({ canvas, context }, 0);
+      if (result && result.description) {
+        setDescription(result.description);
+      }
+    }
+  };
 
   const toggleAnimation = () => {
     if (isPlaying) {
