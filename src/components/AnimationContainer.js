@@ -4,7 +4,7 @@ import { animationRegistry } from '../utils/animations';
 const AnimationContainer = ({ patternId }) => {
   const canvasRef = useRef(null);
   const [isPlaying, setIsPlaying] = useState(false);
-  const [setCurrentStep] = useState(0);
+  const [currentStep, setCurrentStep] = useState(0);
   const [speed, setSpeed] = useState(1);
   const [description, setDescription] = useState('');
   const intervalRef = useRef(null);
