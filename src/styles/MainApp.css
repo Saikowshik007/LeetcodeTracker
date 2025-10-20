@@ -84,6 +84,8 @@
   box-shadow: var(--shadow);
   margin-bottom: 20px;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
 }
 
 .pattern-header {
@@ -121,13 +123,16 @@
 
 .pattern-content.expanded {
   padding: 20px;
-  max-height: 2000px;
-  transition: max-height 0.5s ease-in, padding 0.3s ease-in;
+  max-height: none; /* Remove the max-height limitation */
+  overflow-y: auto; /* Enable vertical scrolling */
+  transition: padding 0.3s ease-in;
 }
 
 /* Sub Pattern Sections */
 .subpattern-section {
   margin-bottom: 30px;
+  max-height: 100%;
+  overflow-y: visible;
 }
 
 .subpattern-section:last-child {
@@ -143,6 +148,9 @@
 
 .problem-list {
   list-style-type: none;
+  padding-left: 0;
+  margin: 0;
+  max-height: 100%;
 }
 
 .problem-item {
